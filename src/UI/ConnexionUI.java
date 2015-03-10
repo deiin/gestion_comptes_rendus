@@ -4,15 +4,11 @@ package UI;
  *
  * @author Dan
  */
-
-
 import CONTROLLER.ConnexionController;
 
 public class ConnexionUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InterfaceUtilisateur
-     */
+    private ConnexionController controller=new ConnexionController();
     public ConnexionUI() {
         initComponents();
     }
@@ -107,17 +103,15 @@ public class ConnexionUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void connexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexionActionPerformed
-        if(new ConnexionController().getConnexion(log.getText(), pass.getText())==true) this.setVisible(false);
+        if(controller.getConnexion(log.getText(), pass.getText())==true) this.setVisible(false);
     }//GEN-LAST:event_connexionActionPerformed
 
     private void logActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logActionPerformed
-        // Champ login
-        
+
     }//GEN-LAST:event_logActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        // Champ mot de passe
-        
+
     }//GEN-LAST:event_passActionPerformed
 
     private void quitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitterActionPerformed
@@ -161,8 +155,6 @@ public class ConnexionUI extends javax.swing.JFrame {
             }
         });
     }
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton connexion;
     public static javax.swing.JLabel error;

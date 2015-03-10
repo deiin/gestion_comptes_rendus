@@ -6,10 +6,11 @@ package UI;
 import CONTROLLER.VisiteurController;
 
 public class VisiteurUI extends javax.swing.JFrame {
+    private VisiteurController controller= new VisiteurController();
 
     public VisiteurUI() {
         initComponents();
-        new VisiteurController().infoVis(0);
+        controller.infoVis(0);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -220,15 +221,15 @@ public class VisiteurUI extends javax.swing.JFrame {
     }//GEN-LAST:event_adresseVisiteurActionPerformed
 
     private void précédentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_précédentActionPerformed
-        new VisiteurController().visPrecedent();
+        controller.visPrecedent();
     }//GEN-LAST:event_précédentActionPerformed
 
     private void suivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suivantActionPerformed
-        new VisiteurController().visSuivant();
+        controller.visSuivant();
     }//GEN-LAST:event_suivantActionPerformed
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        new VisiteurController().infoVisSelected(listVisiteurs.getSelectedIndex());
+        controller.infoVisSelected(listVisiteurs.getSelectedIndex());
     }//GEN-LAST:event_validerActionPerformed
 
     private void secteurVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secteurVisiteurActionPerformed

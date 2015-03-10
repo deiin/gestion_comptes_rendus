@@ -8,16 +8,15 @@ import CONTROLLER.MedicamentController;
  */
 public class MedicamentUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Médicament
-     */
+    private MedicamentController controller= new MedicamentController();
+    
     public MedicamentUI() {
         initComponents();
         effets.setLineWrap(true);
         effets.setWrapStyleWord(true);
         contreIndication.setLineWrap(true);
         contreIndication.setWrapStyleWord(true);
-        new MedicamentController().infoMed(0);
+        controller.infoMed(0);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -182,11 +181,11 @@ public class MedicamentUI extends javax.swing.JFrame {
     }//GEN-LAST:event_fermerActionPerformed
 
     private void precedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precedentActionPerformed
-        new MedicamentController().medPrécédent();
+        controller.medPrécédent();
     }//GEN-LAST:event_precedentActionPerformed
 
     private void suivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suivantActionPerformed
-        new MedicamentController().medSuivant();
+        controller.medSuivant();
     }//GEN-LAST:event_suivantActionPerformed
 
     /**

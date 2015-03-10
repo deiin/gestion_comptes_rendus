@@ -1,25 +1,24 @@
 package UI;
 
 import CONTROLLER.PraticienController;
-
 /**
  *
  * @author Dan
  */
 public class PraticienUI extends javax.swing.JFrame {
-
+    private PraticienController controller=new PraticienController();
     /**
      * Creates new form Praticien
      */
     public PraticienUI() {
         initComponents();
-        new PraticienController().infoPra(0);
+        controller.infoPra(0);
     }
     
     public PraticienUI(int Pra){
         initComponents();
-        new PraticienController().infoPra(0);
-        new PraticienController().infoPraSelected(Pra);
+        controller.infoPra(0);
+        controller.infoPraSelected(Pra);
         
     }
 
@@ -201,15 +200,15 @@ public class PraticienUI extends javax.swing.JFrame {
     }//GEN-LAST:event_fermerActionPerformed
 
     private void suivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suivantActionPerformed
-       new PraticienController().praSuivant();
+       controller.praSuivant();
     }//GEN-LAST:event_suivantActionPerformed
 
     private void precedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precedentActionPerformed
-       new PraticienController().praPrécédent();
+       controller.praPrécédent();
     }//GEN-LAST:event_precedentActionPerformed
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        new PraticienController().infoPraSelected(listPraticien.getSelectedIndex());
+        controller.infoPraSelected(listPraticien.getSelectedIndex());
     }//GEN-LAST:event_validerActionPerformed
 
     private void nomPraticienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomPraticienActionPerformed

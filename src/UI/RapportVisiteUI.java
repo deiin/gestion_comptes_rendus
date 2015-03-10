@@ -5,13 +5,14 @@ import CONTROLLER.RapportVisiteController;
  * @author Dan
  */
 public class RapportVisiteUI extends javax.swing.JFrame{
+    private RapportVisiteController controller= new RapportVisiteController();
     /**
      * Creates new form Rapport
      */
     public RapportVisiteUI() {
         initComponents();
-        new RapportVisiteController().tabEchantillon();
-        new RapportVisiteController().infoRap();
+        controller.tabEchantillon();
+        controller.infoRap();
         this.Bilan.setLineWrap(true);
         this.Bilan.setWrapStyleWord(true);
         calendrier.setVisible(false);
@@ -242,11 +243,11 @@ public class RapportVisiteUI extends javax.swing.JFrame{
     }//GEN-LAST:event_numeroRapportActionPerformed
 
     private void nouveauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nouveauActionPerformed
-        new RapportVisiteController().rapNouveau();
+        controller.rapNouveau();
     }//GEN-LAST:event_nouveauActionPerformed
 
     private void suivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suivantActionPerformed
-        new RapportVisiteController().rapSuivant();
+        controller.rapSuivant();
     }//GEN-LAST:event_suivantActionPerformed
 
     private void detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailActionPerformed
@@ -258,11 +259,11 @@ public class RapportVisiteUI extends javax.swing.JFrame{
     }//GEN-LAST:event_dateRapportFocusGained
 
     private void enregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enregistrerActionPerformed
-        new RapportVisiteController().rapEnregistrer();
+        controller.rapEnregistrer();
     }//GEN-LAST:event_enregistrerActionPerformed
 
     private void precedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precedentActionPerformed
-        new RapportVisiteController().rapPrecedent();
+        controller.rapPrecedent();
     }//GEN-LAST:event_precedentActionPerformed
 
     private void dateRapportFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dateRapportFocusLost

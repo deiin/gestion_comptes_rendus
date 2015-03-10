@@ -14,33 +14,32 @@ import static UI.PraticienUI.nomPraticien;
 import static UI.PraticienUI.numeroPraticien;
 import static UI.PraticienUI.prenomPraticien;
 import static UI.PraticienUI.villePraticien;
+import java.util.ArrayList;
 
 /**
  *
  * @author Dan
  */
 public class PraticienController {
-    
-    private DAO<TypePraticien> typePraticienDAO = new TypePraticienDAO();
-    private DAO<Praticien> praticienDAO = new PraticienDAO();
+    private ArrayList<TypePraticien> type= new TypePraticienDAO().find();
+    private ArrayList<Praticien> pra = new PraticienDAO().find();
     private static int b=0;
     private static int n=0;
     public PraticienController(){}
     
-    
     public void praSuivant(){
-        if(b!=praticienDAO.find().size()-1){
+        if(b!=pra.size()-1){
             b++;
             n++;
-            numeroPraticien.setText(""+praticienDAO.find().get(b).getPraNum());
-            nomPraticien.setText(praticienDAO.find().get(b).getPraNom());
-            prenomPraticien.setText(praticienDAO.find().get(b).getPraPrenom());
-            adressePraticien.setText(praticienDAO.find().get(b).getPraAdresse());
-            cpPraticien.setText(praticienDAO.find().get(b).getPraCp());
-            villePraticien.setText(praticienDAO.find().get(b).getPraVille());
-            coeffNot.setText(""+praticienDAO.find().get(b).getPraCoefnotoriete());
+            numeroPraticien.setText(""+pra.get(b).getPraNum());
+            nomPraticien.setText(pra.get(b).getPraNom());
+            prenomPraticien.setText(pra.get(b).getPraPrenom());
+            adressePraticien.setText(pra.get(b).getPraAdresse());
+            cpPraticien.setText(pra.get(b).getPraCp());
+            villePraticien.setText(pra.get(b).getPraVille());
+            coeffNot.setText(""+pra.get(b).getPraCoefnotoriete());
             listPraticien.setSelectedIndex(n);
-            lieuExercice.setSelectedItem(""+praticienDAO.find().get(b).getTypCode().getTypLieu());   
+            lieuExercice.setSelectedItem(""+pra.get(b).getTypCode().getTypLieu());   
         }
     
     }
@@ -49,46 +48,46 @@ public class PraticienController {
         if(b!=0){
                 b--;
                 n--;
-                numeroPraticien.setText(""+praticienDAO.find().get(b).getPraNum());
-                nomPraticien.setText(praticienDAO.find().get(b).getPraNom());
-                prenomPraticien.setText(praticienDAO.find().get(b).getPraPrenom());
-                adressePraticien.setText(praticienDAO.find().get(b).getPraAdresse());
-                cpPraticien.setText(praticienDAO.find().get(b).getPraCp());
-                villePraticien.setText(praticienDAO.find().get(b).getPraVille());
-                coeffNot.setText(""+praticienDAO.find().get(b).getPraCoefnotoriete());
+                numeroPraticien.setText(""+pra.get(b).getPraNum());
+                nomPraticien.setText(pra.get(b).getPraNom());
+                prenomPraticien.setText(pra.get(b).getPraPrenom());
+                adressePraticien.setText(pra.get(b).getPraAdresse());
+                cpPraticien.setText(pra.get(b).getPraCp());
+                villePraticien.setText(pra.get(b).getPraVille());
+                coeffNot.setText(""+pra.get(b).getPraCoefnotoriete());
                 listPraticien.setSelectedIndex(n);
-                lieuExercice.setSelectedItem(""+praticienDAO.find().get(b).getTypCode().getTypLieu());
+                lieuExercice.setSelectedItem(""+pra.get(b).getTypCode().getTypLieu());
         }
     }
     
     public void infoPra(int i){
-        numeroPraticien.setText(""+praticienDAO.find().get(i).getPraNum());
-        nomPraticien.setText(praticienDAO.find().get(i).getPraNom());
-        prenomPraticien.setText(praticienDAO.find().get(i).getPraPrenom());
-        adressePraticien.setText(praticienDAO.find().get(i).getPraAdresse());
-        cpPraticien.setText(praticienDAO.find().get(i).getPraCp());
-        villePraticien.setText(praticienDAO.find().get(i).getPraVille());
-        coeffNot.setText(""+praticienDAO.find().get(i).getPraCoefnotoriete());
-        for(int j=typePraticienDAO.find().size()-1;j>=0;j--){
-            lieuExercice.addItem(""+typePraticienDAO.find().get(j).getTypLieu());
+        numeroPraticien.setText(""+pra.get(i).getPraNum());
+        nomPraticien.setText(pra.get(i).getPraNom());
+        prenomPraticien.setText(pra.get(i).getPraPrenom());
+        adressePraticien.setText(pra.get(i).getPraAdresse());
+        cpPraticien.setText(pra.get(i).getPraCp());
+        villePraticien.setText(pra.get(i).getPraVille());
+        coeffNot.setText(""+pra.get(i).getPraCoefnotoriete());
+        for(int j=type.size()-1;j>=0;j--){
+            lieuExercice.addItem(""+type.get(j).getTypLieu());
         }
-        for(int j=0; j<=praticienDAO.find().size()-1; j++){
-            listPraticien.addItem(praticienDAO.find().get(j).getPraNom()+" "+praticienDAO.find().get(j).getPraPrenom());
+        for(int j=0; j<=pra.size()-1; j++){
+            listPraticien.addItem(pra.get(j).getPraNom()+" "+pra.get(j).getPraPrenom());
         }
-        lieuExercice.setSelectedItem(""+praticienDAO.find().get(i).getTypCode().getTypLieu());
+        lieuExercice.setSelectedItem(""+pra.get(i).getTypCode().getTypLieu());
         
     }
     
     public void infoPraSelected(int i){
-        numeroPraticien.setText(""+praticienDAO.find().get(i).getPraNum());
-        nomPraticien.setText(praticienDAO.find().get(i).getPraNom());
-        prenomPraticien.setText(praticienDAO.find().get(i).getPraPrenom());
-        adressePraticien.setText(praticienDAO.find().get(i).getPraAdresse());
-        cpPraticien.setText(praticienDAO.find().get(i).getPraCp());
-        villePraticien.setText(praticienDAO.find().get(i).getPraVille());
-        coeffNot.setText(""+praticienDAO.find().get(i).getPraCoefnotoriete());
+        numeroPraticien.setText(""+pra.get(i).getPraNum());
+        nomPraticien.setText(pra.get(i).getPraNom());
+        prenomPraticien.setText(pra.get(i).getPraPrenom());
+        adressePraticien.setText(pra.get(i).getPraAdresse());
+        cpPraticien.setText(pra.get(i).getPraCp());
+        villePraticien.setText(pra.get(i).getPraVille());
+        coeffNot.setText(""+pra.get(i).getPraCoefnotoriete());
         listPraticien.setSelectedIndex(i);
-        lieuExercice.setSelectedItem(""+praticienDAO.find().get(i).getTypCode().getTypLieu());
+        lieuExercice.setSelectedItem(""+pra.get(i).getTypCode().getTypLieu());
     }
     
 }

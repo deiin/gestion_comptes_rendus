@@ -40,11 +40,18 @@ import javax.swing.table.DefaultTableModel;
 public class RapportVisiteController {
 
     private JComboBox listMedicament = new JComboBox();
+    
     private DAO<RapportVisite> rapportVisiteDAO = new RapportVisiteDAO();
+    private ArrayList<RapportVisite> rap= rapportVisiteDAO.find();
     private RapportVisite rapportVisite = new RapportVisite();
+    
     private DAO<Offrir> offrirDAO = new OffrirDAO();
+    private ArrayList<Offrir> off= offrirDAO.find();
     private Offrir offrir = new Offrir();
+    
     private DAO<Praticien> praticienDAO = new PraticienDAO();
+    private ArrayList<Praticien> pra= praticienDAO.find();
+    
     private Visiteur visMatricule;
     private int rapNum;
     private Praticien praNum;
@@ -54,12 +61,13 @@ public class RapportVisiteController {
     private Medicament medicament;
     private short qte;
     private DAO<Medicament> medicamentDAO = new MedicamentDAO();
+    private ArrayList<Medicament> med= medicamentDAO.find();
     private static int b = 0;
 
     public void tabEchantillon() {
-        String[] comboData = new String[medicamentDAO.find().size()];
-        for (int i = 0; i <= medicamentDAO.find().size() - 1; i++) {
-            comboData[i] = medicamentDAO.find().get(i).getMedNomcommercial();
+        String[] comboData = new String[med.size()];
+        for (int i = 0; i <= med.size() - 1; i++) {
+            comboData[i] = med.get(i).getMedNomcommercial();
         }
         String[] titre = {"Médicament", "Nb. Echantillon"};
         Object[][] data = {
@@ -102,7 +110,7 @@ public class RapportVisiteController {
             try {
                 visMatricule = new VisiteurDAO().find(MenuUI.visMatricule);
                 rapNum = Integer.parseInt(numeroRapport.getText());
-                praNum = new PraticienDAO().find(listPraticiens.getSelectedIndex() + 1);
+                praNum = praticienDAO.find(listPraticiens.getSelectedIndex() + 1);
                 rapDate = format.parse(dateRapport.getText());
                 rapBilan = Bilan.getText();
                 rapMotif = motifVisite.getText();
@@ -133,7 +141,7 @@ public class RapportVisiteController {
             try {
                 visMatricule = new VisiteurDAO().find(MenuUI.visMatricule);
                 rapNum = Integer.parseInt(numeroRapport.getText());
-                praNum = new PraticienDAO().find(listPraticiens.getSelectedIndex()+1);
+                praNum = praticienDAO.find(listPraticiens.getSelectedIndex()+1);
                 rapDate = format.parse(dateRapport.getText());
                 rapBilan = Bilan.getText();
                 rapMotif = motifVisite.getText();
@@ -161,7 +169,7 @@ public class RapportVisiteController {
     }
 
     public void rapNouveau() {
-        int Num = rapportVisiteDAO.find().get(rapportVisiteDAO.find().size() - 1).getRapNum() + 1;
+        int Num = rap.get(rapportVisiteDAO.find().size() - 1).getRapNum() + 1;
         numeroRapport.setText("" + Num);
         dateRapport.setText("");
         motifVisite.setText("");
@@ -185,11 +193,11 @@ public class RapportVisiteController {
         erreurRap.setText(" ");
         if (b != 0) {
             b--;
-            numeroRapport.setText("" + rapportVisiteDAO.find().get(b).getRapNum());
-            dateRapport.setText(format.format(rapportVisiteDAO.find().get(b).getRapDate()));
-            motifVisite.setText(rapportVisiteDAO.find().get(b).getRapMotif());
-            Bilan.setText(rapportVisiteDAO.find().get(b).getRapBilan());
-            listPraticiens.setSelectedItem(rapportVisiteDAO.find().get(b).getPraNum().getPraNom() + " " + rapportVisiteDAO.find().get(b).getPraNum().getPraPrenom());
+            numeroRapport.setText("" + rap.get(b).getRapNum());
+            dateRapport.setText(format.format(rap.get(b).getRapDate()));
+            motifVisite.setText(rap.get(b).getRapMotif());
+            Bilan.setText(rap.get(b).getRapBilan());
+            listPraticiens.setSelectedItem(rap.get(b).getPraNum().getPraNom() + " " + rap.get(b).getPraNum().getPraPrenom());
 
             for (int i = 0; i < echantillons.getRowCount(); i++) {
                 for (int j = 0; j < echantillons.getColumnCount(); j++) {
@@ -204,9 +212,9 @@ public class RapportVisiteController {
             for (int i = 0; i < echantillons.getRowCount(); i++) {
                 for (int j = 0; j < echantillons.getColumnCount(); j++) {
                     if (echantillons.getColumnName(j) == "Médicament") {
-                        echantillons.setValueAt(offrirDAO.findOffre(rapportVisiteDAO.find().get(b).getVisMatricule().getVisMatricule(), rapportVisiteDAO.find().get(b).getRapNum()).get(i).getMedDepotlegal().getMedNomcommercial(), i, j);
+                        echantillons.setValueAt(offrirDAO.findOffre(rap.get(b).getVisMatricule().getVisMatricule(), rap.get(b).getRapNum()).get(i).getMedDepotlegal().getMedNomcommercial(), i, j);
                     } else if (echantillons.getColumnName(j) == "Nb. Echantillon") {
-                        echantillons.setValueAt(offrirDAO.findOffre(rapportVisiteDAO.find().get(b).getVisMatricule().getVisMatricule(), rapportVisiteDAO.find().get(b).getRapNum()).get(i).getOffQte(), i, j);
+                        echantillons.setValueAt(offrirDAO.findOffre(rap.get(b).getVisMatricule().getVisMatricule(), rap.get(b).getRapNum()).get(i).getOffQte(), i, j);
                     }
                 }
             }
@@ -216,13 +224,13 @@ public class RapportVisiteController {
     public void rapSuivant() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         erreurRap.setText(" ");
-        if (b != rapportVisiteDAO.find().size() - 1) {
+        if (b != rap.size() - 1) {
             b++;
-            numeroRapport.setText("" + rapportVisiteDAO.find().get(b).getRapNum());
-            dateRapport.setText(format.format(rapportVisiteDAO.find().get(b).getRapDate()));
-            motifVisite.setText(rapportVisiteDAO.find().get(b).getRapMotif());
-            Bilan.setText(rapportVisiteDAO.find().get(b).getRapBilan());
-            listPraticiens.setSelectedItem(rapportVisiteDAO.find().get(b).getPraNum().getPraNom() + " " + rapportVisiteDAO.find().get(b).getPraNum().getPraPrenom());
+            numeroRapport.setText("" + rap.get(b).getRapNum());
+            dateRapport.setText(format.format(rap.get(b).getRapDate()));
+            motifVisite.setText(rap.get(b).getRapMotif());
+            Bilan.setText(rap.get(b).getRapBilan());
+            listPraticiens.setSelectedItem(rap.get(b).getPraNum().getPraNom() + " " + rap.get(b).getPraNum().getPraPrenom());
 
             for (int i = 0; i < echantillons.getRowCount(); i++) {
                 for (int j = 0; j < echantillons.getColumnCount(); j++) {
@@ -238,9 +246,9 @@ public class RapportVisiteController {
                 for (int j = 0; j < echantillons.getColumnCount(); j++) {
                     echantillons.setValueAt("", i, j);
                     if (echantillons.getColumnName(j) == "Médicament") {
-                        echantillons.setValueAt(offrirDAO.findOffre(rapportVisiteDAO.find().get(b).getVisMatricule().getVisMatricule(), rapportVisiteDAO.find().get(b).getRapNum()).get(i).getMedDepotlegal().getMedNomcommercial(), i, j);
+                        echantillons.setValueAt(offrirDAO.findOffre(rap.get(b).getVisMatricule().getVisMatricule(), rap.get(b).getRapNum()).get(i).getMedDepotlegal().getMedNomcommercial(), i, j);
                     } else if (echantillons.getColumnName(j) == "Nb. Echantillon") {
-                        echantillons.setValueAt(offrirDAO.findOffre(rapportVisiteDAO.find().get(b).getVisMatricule().getVisMatricule(), rapportVisiteDAO.find().get(b).getRapNum()).get(i).getOffQte(), i, j);
+                        echantillons.setValueAt(offrirDAO.findOffre(rap.get(b).getVisMatricule().getVisMatricule(), rap.get(b).getRapNum()).get(i).getOffQte(), i, j);
                     }
                 }
             }
@@ -248,7 +256,7 @@ public class RapportVisiteController {
     }
 
     public void infoRap() {
-        for (int j = 1; j <= praticienDAO.find().size() - 1; j++) {
+        for (int j = 1; j <= pra.size() - 1; j++) {
             listPraticiens.addItem(praticienDAO.find(j).getPraNom() + " " + praticienDAO.find(j).getPraPrenom());
         }
     }
