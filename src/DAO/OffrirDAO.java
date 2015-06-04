@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class OffrirDAO extends DAO<Offrir> {
     public Offrir find(String nom, Date date) {return new Offrir();}
     public ArrayList<Offrir> find() {return new ArrayList();}
     public Offrir find(int id) {return new Offrir();}
-    public Offrir update(Offrir obj){return new Offrir();}
+    public Offrir update(Offrir obj){return obj;}
     
     
     

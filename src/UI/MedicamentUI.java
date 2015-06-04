@@ -80,7 +80,7 @@ public class MedicamentUI extends javax.swing.JFrame {
         jLabel6.setBounds(10, 178, 120, 25);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("Contre Indications");
+        jLabel7.setText("Contre indication");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(10, 290, 120, 25);
 
@@ -127,7 +127,7 @@ public class MedicamentUI extends javax.swing.JFrame {
         jScrollPane2.setBounds(150, 290, 350, 100);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel8.setText("Prix Echantillon");
+        jLabel8.setText("Prix échantillon");
         getContentPane().add(jLabel8);
         jLabel8.setBounds(10, 400, 120, 25);
 

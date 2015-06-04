@@ -42,7 +42,7 @@ public class RapportVisiteController {
     private JComboBox listMedicament = new JComboBox();
     
     private DAO<RapportVisite> rapportVisiteDAO = new RapportVisiteDAO();
-    private ArrayList<RapportVisite> rap= rapportVisiteDAO.find();
+    private ArrayList<RapportVisite> rap;
     private RapportVisite rapportVisite = new RapportVisite();
     
     private DAO<Offrir> offrirDAO = new OffrirDAO();
@@ -189,6 +189,7 @@ public class RapportVisiteController {
     }
 
     public void rapPrecedent() {
+        rap= rapportVisiteDAO.find();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         erreurRap.setText(" ");
         if (b != 0) {
@@ -222,6 +223,7 @@ public class RapportVisiteController {
     }
 
     public void rapSuivant() {
+        rap= rapportVisiteDAO.find();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         erreurRap.setText(" ");
         if (b != rap.size() - 1) {

@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import ENTITE.Medicament;
 import java.util.ArrayList;
 import ENTITE.Famille;
+import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -81,9 +83,55 @@ public class MedicamentDAO extends DAO<Medicament>{
     
     public Medicament find(int id){return new Medicament();}
     public Medicament find(String nom, Date date){return new Medicament();}
-    public Medicament create(Medicament obj){return new Medicament();}
-    public Medicament update(Medicament obj){return new Medicament();}
-    public void delete(Medicament obj){}
+    public Medicament create(Medicament obj){
+        try {
+                PreparedStatement prepare = this.connect
+                        .prepareStatement("INSERT INTO medicament (MED_DEPOTLEGAL, MED_NOMCOMMERCIAL, FAM_CODE, MED_COMPOSITION, MED_EFFETS, MED_CONTREINDIC, MED_PRIXECHANTILLON)"+
+                                            			"VALUES(?, ?, ?, ?, ?, ?, ?)"
+                                                    );
+				prepare.setString(1, obj.getMedDepotlegal());
+                                prepare.setString(2, obj.getMedNomcommercial());
+                                prepare.setString(3, obj.getFamCode().getFamCode());
+                                prepare.setString(4, obj.getMedComposition());
+                                prepare.setString(5, obj.getMedEffets());
+                                prepare.setString(6, obj.getMedContreindic());
+				prepare.setDouble(7, obj.getMedPrixechantillon());
+				
+				prepare.executeUpdate();
+				obj = this.find(obj.getMedDepotlegal());	
+				
+	    } catch (SQLException e) {
+	            e.printStackTrace();
+	    }
+        return obj;
+    }
+    public Medicament update(Medicament obj){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try{
+                this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE
+                ).executeUpdate("UPDATE medicament SET MED_NOMCOMMERCIAL='"+obj.getMedNomcommercial()+"',"
+                        + " FAM_CODE='"+obj.getFamCode().getFamCode()+"',"
+                        + " MED_COMPOSITION='"+obj.getMedComposition()+"',"
+                        + " MED_EFFETS='"+obj.getMedEffets()+"',"
+                        + " MED_CONTREINDIC='"+obj.getMedContreindic()+"',"
+                        + " MED_PRIXECHANTILLON='"+obj.getMedPrixechantillon()+"'"
+                        + " where MED_DEPOTLEGAL="+obj.getMedDepotlegal()+"'"
+                );
+                obj = this.find(obj.getMedDepotlegal());
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return obj;
+    }
+    public void delete(Medicament obj){
+        try{
+            this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate("DELETE FROM medicament Where MED_DEPOTLEGAL='"+obj.getMedDepotlegal()+"'");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<Medicament> findOffre(String vis, int rap){return new ArrayList();}
     
 }

@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import ENTITE.Praticien;
 import java.util.ArrayList;
 import ENTITE.TypePraticien;
+import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PraticienDAO extends DAO<Praticien>{
@@ -83,9 +85,58 @@ public class PraticienDAO extends DAO<Praticien>{
     
     public Praticien find(String Matricule){return new Praticien();}
     public Praticien find(String nom, Date date){return new Praticien();}
-    public Praticien create(Praticien obj){return new Praticien();}
-    public Praticien update(Praticien obj){return new Praticien();}
-    public void delete(Praticien obj){}
+    public Praticien create(Praticien obj){
+        try {
+                PreparedStatement prepare = this.connect
+                        .prepareStatement("INSERT INTO praticien (PRA_NUM, PRA_NOM, PRA_PRENOM, PRA_ADRESSE, PRA_CP, PRA_VILLE, PRA_COEFNOTORIETE, TYP_CODE)"+
+                                            			"VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+                                                    );
+				prepare.setShort(1, obj.getPraNum());
+                                prepare.setString(2, obj.getPraNom());
+                                prepare.setString(3, obj.getPraPrenom());
+                                prepare.setString(4, obj.getPraAdresse());
+                                prepare.setString(5, obj.getPraCp());
+                                prepare.setString(6, obj.getPraVille());
+				prepare.setDouble(7, obj.getPraCoefnotoriete());
+                                prepare.setString(8, obj.getTypCode().getTypCode());
+				
+				prepare.executeUpdate();
+				obj = this.find(obj.getPraNum());	
+				
+	    } catch (SQLException e) {
+	            e.printStackTrace();
+	    }
+        return obj;
+    }
+    
+    public Praticien update(Praticien obj){
+            try{
+                this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE
+                ).executeUpdate("UPDATE praticien SET PRA_NOM='"+obj.getPraNom()+"',"
+                        + " PRA_PRENOM='"+obj.getPraPrenom()+"',"
+                        + " PRA_ADRESSE='"+obj.getPraAdresse()+"',"
+                        + " PRA_CP='"+obj.getPraCp()+"',"
+                        + " PRA_VILLE='"+obj.getPraVille()+"',"
+                        + " PRA_COEFNOTORIETE='"+obj.getPraCoefnotoriete()+"',"
+                        + " TYP_CODE='"+obj.getTypCode().getTypCode()+"' "
+                        + " where PRA_NUM='"+obj.getPraNum()+"'"
+                );
+                obj = this.find(obj.getPraNum());
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return obj;
+    
+    }
+    public void delete(Praticien obj){
+        try{
+            this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate("DELETE FROM praticien Where PRA_NUM='"+obj.getPraNum()+"'");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<Praticien> findOffre(String vis, int rap){return new ArrayList();}
     
 }

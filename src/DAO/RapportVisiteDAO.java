@@ -49,9 +49,9 @@ public class RapportVisiteDAO extends DAO<RapportVisite> {
         try{
             this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE
             ).executeUpdate("UPDATE rapport_visite SET RAP_DATE='"+format.format(obj.getRapDate())+"',"
-                    + "RAP_BILAN='"+obj.getRapBilan()+"',"
-                    + "RAP_MOTIF='"+obj.getRapMotif()+"'"
-                    + "where RAP_NUM="+obj.getRapNum()
+                    + " RAP_BILAN='"+obj.getRapBilan()+"',"
+                    + " RAP_MOTIF='"+obj.getRapMotif()+"'"
+                    + " where RAP_NUM="+obj.getRapNum()
             );
             obj = this.find(obj.getRapNum());
         
@@ -141,7 +141,14 @@ public class RapportVisiteDAO extends DAO<RapportVisite> {
 
     public RapportVisite find(String Matricule){return new RapportVisite();}
     public RapportVisite find(String nom, Date date){return new RapportVisite();}
-    public void delete(RapportVisite obj){}
+    public void delete(RapportVisite obj){
+        try{
+            this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate("DELETE FROM rapport_visite Where RAP_NUM='"+obj.getRapNum()+"'");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<RapportVisite> updateOffre(ArrayList<RapportVisite> obj){return new ArrayList();}
     public ArrayList<RapportVisite> findOffre(String vis, int rap){return new ArrayList();}
     

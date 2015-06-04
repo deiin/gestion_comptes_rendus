@@ -2,6 +2,7 @@
 package DAO;
 
 import ENTITE.TypePraticien;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -65,8 +66,46 @@ public class TypePraticienDAO extends DAO<TypePraticien> {
     
     public TypePraticien find(int id){return new TypePraticien();}
     public TypePraticien find(String nom, Date date){return new TypePraticien();}
-    public TypePraticien create(TypePraticien obj){return new TypePraticien();}
-    public TypePraticien update(TypePraticien obj){return new TypePraticien();}
-    public void delete(TypePraticien obj){}
+    public TypePraticien create(TypePraticien obj){
+        try {
+                PreparedStatement prepare = this.connect
+                        .prepareStatement("INSERT INTO type_praticien (TYP_CODE, TYP_LIBELLE, TYP_LIEU)"+
+                                            			"VALUES(?, ?, ?)"
+                                                    );
+				prepare.setString(1, obj.getTypCode());
+                                prepare.setString(2, obj.getTypLibelle());
+                                prepare.setString(3, obj.getTypLieu());
+				
+				prepare.executeUpdate();
+				obj = this.find(obj.getTypCode());	
+				
+	    } catch (SQLException e) {
+	            e.printStackTrace();
+	    }
+        return obj;
+    
+    }
+    public TypePraticien update(TypePraticien obj){
+            try{
+                this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE
+                ).executeUpdate("UPDATE type_praticien SET TYP_LIEU='"+obj.getTypLieu()+"',"
+                        + "TYP_LIBELLE='"+obj.getTypLibelle()+"',"
+                        + "where TYP_CODE="+obj.getTypCode()+"'"
+                );
+                obj = this.find(obj.getTypCode());
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return obj;
+    }
+    public void delete(TypePraticien obj){
+        try{
+            this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate("DELETE FROM type_praticien Where TYP_CODE='"+obj.getTypCode()+"'");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<TypePraticien> findOffre(String vis, int rap){return new ArrayList();} 
 }

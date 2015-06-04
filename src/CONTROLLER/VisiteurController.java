@@ -30,8 +30,8 @@ public class VisiteurController {
     private static int n=0;
     
     public VisiteurController(){
-    
     }
+    
     public void visPrecedent(){
         if(b!=0){
                 b--;
@@ -42,7 +42,12 @@ public class VisiteurController {
                 cpVisiteur.setText(vis.get(b).getVisCp());
                 villeVisiteur.setText(vis.get(b).getVisVille());
                 listVisiteurs.setSelectedIndex(n);
+                if(vis.get(b).getSecCode().getSecLibelle()==null){
+                secteurVisiteur.setSelectedItem("");
+                }
+                else{
                 secteurVisiteur.setSelectedItem(""+vis.get(b).getSecCode().getSecLibelle());
+                }
                 laboVisiteur.setSelectedItem(""+vis.get(b).getLabCode().getLabNom());    
         }
     }

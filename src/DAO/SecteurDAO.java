@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import ENTITE.Secteur;
 import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,9 +66,44 @@ public class SecteurDAO extends DAO<Secteur> {
 
     public Secteur find(int id){return new Secteur();}
     public Secteur find(String nom, Date date){return new Secteur();}
-    public Secteur create(Secteur obj){return new Secteur();}
-    public Secteur update(Secteur obj){return new Secteur();}
-    public void delete(Secteur obj){}
+    public Secteur create(Secteur obj){
+        try {
+                PreparedStatement prepare = this.connect
+                        .prepareStatement("INSERT INTO secteur (SEC_CODE, SEC_LIBELLE)"+
+                                            			"VALUES(?, ?)"
+                                                    );
+                                prepare.setString(1, obj.getSecCode());
+                                prepare.setString(2, obj.getSecLibelle());
+				
+				prepare.executeUpdate();
+				obj = this.find(obj.getSecCode());					
+	    } catch (SQLException e) {
+	            e.printStackTrace();
+	    }
+        return obj;
+    
+    }
+    public Secteur update(Secteur obj){
+            try{
+                this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE
+                ).executeUpdate("UPDATE secteur SET SEC_LIBELLE='"+obj.getSecLibelle()+"'"
+                        + " where SEC_CODE='"+obj.getSecCode()+"'"
+                );
+                obj = this.find(obj.getSecCode());
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return obj;
+    }
+    public void delete(Secteur obj){
+        try{
+            this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate("DELETE FROM secteur Where SEC_CODE='"+obj.getSecCode()+"'");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<Secteur> findOffre(String vis, int rap){return new ArrayList();}
     
 }

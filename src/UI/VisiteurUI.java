@@ -133,6 +133,11 @@ public class VisiteurUI extends javax.swing.JFrame {
         adresseVisiteur.setBounds(114, 157, 150, 25);
 
         cpVisiteur.setEditable(false);
+        cpVisiteur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpVisiteurActionPerformed(evt);
+            }
+        });
         getContentPane().add(cpVisiteur);
         cpVisiteur.setBounds(114, 183, 50, 25);
 
@@ -235,6 +240,10 @@ public class VisiteurUI extends javax.swing.JFrame {
     private void secteurVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secteurVisiteurActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_secteurVisiteurActionPerformed
+
+    private void cpVisiteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpVisiteurActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpVisiteurActionPerformed
 
     /**
      * @param args the command line arguments

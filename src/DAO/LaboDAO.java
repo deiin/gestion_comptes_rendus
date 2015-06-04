@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import ENTITE.Labo;
 import java.sql.ResultSetMetaData;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -60,8 +61,47 @@ public class LaboDAO extends DAO<Labo> {
     
     public Labo find(int id){return new Labo();}
     public Labo find(String nom, Date date){return new Labo();}
-    public Labo create(Labo obj){return new Labo();}
-    public Labo update(Labo obj){return new Labo();}
-    public void delete(Labo obj){}
+    public Labo create(Labo obj){
+        try {
+                PreparedStatement prepare = this.connect
+                        .prepareStatement("INSERT INTO labo (LAB_CODE, LAB_NOM, LAB_CHEFVENTE)"+
+                                            			"VALUES(?, ?, ?)"
+                                                    );
+                                prepare.setString(1, obj.getLabCode());
+                                prepare.setString(2, obj.getLabNom());
+                                prepare.setString(3, obj.getLabChefvente());
+				
+				prepare.executeUpdate();
+				obj = this.find(obj.getLabCode());	
+				
+	    } catch (SQLException e) {
+	            e.printStackTrace();
+	    }
+        return obj;
+    
+    }
+    public Labo update(Labo obj){
+            try{
+                this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE
+                ).executeUpdate("UPDATE labo SET LAB_NOM='"+obj.getLabNom()+"',"
+                        + " LAB_CHEFVENTE='"+obj.getLabChefvente()+"' "
+                        + " where LAB_CODE='"+obj.getLabCode()+"'"
+                );
+                obj = this.find(obj.getLabCode());
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return obj;
+    
+    }
+    public void delete(Labo obj){
+        try{
+            this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)
+                    .executeUpdate("DELETE FROM labo Where LAB_CODE='"+obj.getLabCode()+"'");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     public ArrayList<Labo> findOffre(String vis, int rap){return new ArrayList();}
 }
